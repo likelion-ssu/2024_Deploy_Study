@@ -1,0 +1,88 @@
+## **CI/CD**
+
+# CI
+
+: 개발자를 위한 자동화 프로세스인 지속적 통합(Continusous Integration) 
+
+: 빌드/테스트 자동화 과정 
+
+애플리케이션에 대한 새로운 코드 변경 사항이 정기적으로 빌드 및 테스트 되어 공유 리포지토리에 통합되기 때문에 여러 명의 개발자가 동시에 애플리케이션 개바로가 관련 코드 작업을 할 경우에 서로 충돌 문제 해결 가능
+
+# CD
+
+: 지속적 배포(Continuous Deployment), 지속적인 서비스 제공(Continuous Delivery)
+
+: 소프트웨어 개발 라이프사이클을 간소화하고 가속화 하는 것이 목표
+
+파이프라인의 추가 단계에 대한 자동화. 얼마나 많은 자동화가 이루어지고 있는지.
+
+### `commit, merge, 배포 과정을 계속 반복하는 과정을 자동화시키기 위해 CI/CD를 배우는것`
+
+# CI/CD의 단계
+
+CI/CD는 테스트(Test), 통합(merge), 배포(Deploy)의 과정을 자동
+
+Develop → Commit → Build → Test(테스트 실패하면 다시 develop) → Deploy
+
+## CI
+
+Code - Build - Test 단계
+
+- code : 개발자가 코드를 원격 코드 저장소에 push하는 단계
+- build : 원격 코드 저장소로부터 코드를 가져와 유닛 테스트 후 빌드하는 단계
+- test : 코드 빌드의 결과물이 다른 컴포넌트와 잘 통합되는지 확인하는 과정
+
+CI 과정을 통해 개발자는 버그를 일찍 발견할 수 있고 테스트가 완료된 코드에 대해 빠른 전달이 가능해지며 CD가 가능해진다. 모든 코드 변화를 하나의 리포지토리에서 관리하는 것부터 시작하며 모든 개발팀의 코드 변화를 확인할 수 있어서 문제점을 투명하게 파악할 수 있다. 
+
+## CD
+
+Release - Deploy - Operate 단계
+
+- release : 배포 가능한 소프트웨어 패키지 작성
+- deploy : 프로비저닝을 실행하고 서비스를 사용자에게 노출 (실질적인 배포)
+- operate : 서비스 현황을 파악하고 생길 수 있는 문제를 감지
+
+코드 변경 사항의 병합부터 프로덕션에 적합한 빌드 제공에 이르는 모든 단계
+
+→ 테스트 자동화와 코드 배포 자동화 포함
+
+이 프로세스를 완료하면 프로덕션 준비가 완료된 빌드를 코드 리포지토리에 자동으로 배포할 수 있으므로 운영팀이 보다 빠르고 손쉽게 애플리케이션을 프로덕션으로 배포할 수 있다.
+
+# Github Actions
+
+## CI/CD를 구축할 때 사용할 툴
+
+- github actions
+- jenkins
+- circle CI
+- travis CI
+
+## Github Actions를 활용한 전체적인 CI/CD 흐름
+
+Github Actions : 로직을 실행시킬 수 있는 일종의 컴퓨터
+
+→ “빌드, 테스트, 배포”에 대한 로직을 실행시키는 역할을 하게 된다.
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f316fa56-77e7-47ca-b397-468f6d5d1a79/2a6eef7f-e673-44c8-bff2-3aae09cb779e/Untitled.png)
+
+1. 코드 작성 후 commit
+2. Github에 push
+3. push를 감지하여 Github Actions에 작성한 로직이 실행
+
+→ build, test, deploy
+
+1. 서버에서 배포된 최신 코드로 서버를 재실행
+
+# CI/CD 구축 방법
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f316fa56-77e7-47ca-b397-468f6d5d1a79/44f4cd6e-f797-43f4-883f-d70c562f8d79/Untitled.png)
+
+### 장점
+
+- git pull을 활용하여 변경된 부분의 프로젝트 코드에 대해서만 업데이트하여 CI/CD 속도가 빠름( 원래 대부분의 CI/CD 방식들은 전체 프로젝트를 통째로 갈아끼우는 방식)
+- CI/CD 툴로 Github Actions만 사용하므로 인프라 구조가 복잡하지 않고 간단
+
+### 단점
+
+- 빌드 작업을 EC2에서 직접 진행하기 때문에 운영하고 있는 서버의 성능에 영향을 미칠 수 있음
+- Github 계정 정보가 해당 EC2에 저장되어 믿을만한 사람들에서만 사용해야함
